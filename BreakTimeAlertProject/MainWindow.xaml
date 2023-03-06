@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BreakTimeAlertProject"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="Break Time Alert"
+		ShowInTaskbar="True"
+        Topmost="True"
+        WindowStyle="SingleBorderWindow"
+        Height="500"
+        Width="700">
+    <Grid Background="Black">
+        <Label Name="MainLabel" Content="Dinlen!" FontSize="90" Foreground="White"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
     </Grid>
 </Window>
