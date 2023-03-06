@@ -25,6 +25,7 @@ namespace BreakTimeAlertProject.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public byte Minute {
             get {
                 return ((byte)(this["Minute"]));
@@ -36,6 +37,7 @@ namespace BreakTimeAlertProject.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public byte Second {
             get {
                 return ((byte)(this["Second"]));
@@ -47,7 +49,7 @@ namespace BreakTimeAlertProject.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Dinlen!")]
         public string Label {
             get {
                 return ((string)(this["Label"]));
@@ -59,6 +61,7 @@ namespace BreakTimeAlertProject.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool isActive {
             get {
                 return ((bool)(this["isActive"]));

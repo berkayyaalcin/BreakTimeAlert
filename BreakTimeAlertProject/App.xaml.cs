@@ -1,4 +1,6 @@
 ﻿using BreakTimeAlertProject.Properties;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,10 +21,12 @@ namespace BreakTimeAlertProject
         AppSettings settings = new AppSettings();
         protected override void OnStartup(StartupEventArgs e)
         {
+
             base.OnStartup(e);
             tray.AppIcon();
             var timer = new System.Timers.Timer(TimeSpan.FromMinutes(settings.Minute).TotalMilliseconds);
-            var hideTimer = new System.Timers.Timer(TimeSpan.FromSeconds(settings.Second).TotalMilliseconds); ;
+            var hideTimer = new System.Timers.Timer(TimeSpan.FromSeconds(settings.Second).TotalMilliseconds);
+            settings.LoadJsonFiletoSettings();
 
             //Tüm ekranları gezerek screen'e atayarak her bir ekran için yeni bir Mainwindow nesnesi oluşturup konumu boyutu gibi özellikleri verip gizler.
             foreach (var screen in System.Windows.Forms.Screen.AllScreens)
