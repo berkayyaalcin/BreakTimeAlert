@@ -22,5 +22,41 @@ namespace BreakTimeAlertProject.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public byte Minute {
+            get {
+                return ((byte)(this["Minute"]));
+            }
+            set {
+                this["Minute"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public byte Second {
+            get {
+                return ((byte)(this["Second"]));
+            }
+            set {
+                this["Second"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Label {
+            get {
+                return ((string)(this["Label"]));
+            }
+            set {
+                this["Label"] = value;
+            }
+        }
     }
 }
