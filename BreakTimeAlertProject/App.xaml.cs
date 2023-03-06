@@ -36,8 +36,10 @@ namespace BreakTimeAlertProject
                 mainWindow.Hide();
                 mainWindow.WindowState = WindowState.Normal;
 
-                //Belirtilen süre aralıklarla çalışması üzerine ayarlanmış ve timer çağrısı ile tetiklenecektir.
-                timer.Elapsed +=
+                if (settings.ActiveRadioButton.IsChecked == true)
+                {
+                    //Belirtilen süre aralıklarla çalışması üzerine ayarlanmış ve timer çağrısı ile tetiklenecektir.
+                    timer.Elapsed +=
                         delegate (object? sender, System.Timers.ElapsedEventArgs args)
                         {
                             //Pencereler ekranda gösterilir ve odaklanıp etkinleştirilir. Invoke belirtilen işlevi UI üzerinde çalıştırmak için kullanılır.
@@ -69,7 +71,10 @@ namespace BreakTimeAlertProject
                             timer.Stop();
                             timer.Start();
                         };
-                timer.Start();
+                    timer.Start();
+                }
+                else
+                    timer.Stop();
             }
         }
     }

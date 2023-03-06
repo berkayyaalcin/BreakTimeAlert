@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,13 @@ namespace BreakTimeAlertProject
     /// </summary>
     public partial class AppSettings : Window
     {
+        private bool _isActive;
         private byte _minute, _second;
         private string? _label;
         public AppSettings()
         {
             InitializeComponent();
+            LoadSettings();
             ActiveRadioButton.Checked += ActiveRadioButton_Checked;
             InactiveRadioButton.Checked += InactiveRadioButton_Checked;
             SaveButton.Click += SaveButton_Click;
@@ -41,12 +44,18 @@ namespace BreakTimeAlertProject
             Properties.Settings.Default.Reload();
         }
 
-        
+        /// <summary>
+        /// Eğer bu buton seçiliyse _isActive'e true değerini atar ve kaydeder.
+        /// </summary>
         private void ActiveRadioButton_Checked(object sender, RoutedEventArgs e)
         {
+            _isActive = true;
+            Properties.Settings.Default.Save();
         }
         private void InactiveRadioButton_Checked(object sender, RoutedEventArgs e)
         {
+            _isActive = false;
+            Properties.Settings.Default.Save();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -54,6 +63,7 @@ namespace BreakTimeAlertProject
             Properties.Settings.Default.Minute = (byte)MinuteBox.Value;
             Properties.Settings.Default.Second = (byte)SecondBox.Value;
             Properties.Settings.Default.Label = (string)TextBox.Text;
+            Properties.Settings.Default.isActive = _isActive;
 
             Properties.Settings.Default.Save();
             System.Windows.Forms.Application.Restart();
@@ -100,6 +110,28 @@ namespace BreakTimeAlertProject
         {
             e.Cancel = true;
             Hide();
+        }
+
+        /// <summary>
+        /// _isActive için ayarlardaki varolan değeri atamaya çalışır. Eğer yok veya yüklenemezse otomatik olarak true değeri atar.
+        /// _isActive durumuna göre ilgili radiobutton seçilmesi sağlanır.
+        /// </summary>
+        private void LoadSettings()
+        {
+            try
+            {
+                _isActive = Properties.Settings.Default.isActive;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                _isActive = true;
+            }
+            if (_isActive)
+            {
+                ActiveRadioButton.IsChecked = true;
+            }
+            else
+                InactiveRadioButton.IsChecked = true;
         }
     }
 }

@@ -3,12 +3,15 @@
   <Profiles />
   <Settings>
     <Setting Name="Minute" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Second" Type="System.Byte" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Label" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="isActive" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

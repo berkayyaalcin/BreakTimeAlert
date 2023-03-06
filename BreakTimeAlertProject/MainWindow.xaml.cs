@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BreakTimeAlertProject.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace BreakTimeAlertProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        AppSettings settings = new AppSettings();
         public MainWindow()
         {
             InitializeComponent();
+            MainLabel.Content = settings.Labell; //İsim ile belirtilen label content'ine settings üzerinde eriştiğimiz Label değerini yazdırıyoruz.
         }
 
         /// <summary>
