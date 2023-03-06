@@ -6,7 +6,8 @@
         Topmost="True" 
         Height="250" 
         Width="250" 
-        HorizontalAlignment="Center" VerticalAlignment="Center">
+        HorizontalAlignment="Center" VerticalAlignment="Center"
+        KeyDown="Window_KeyDown">
     <Grid Background="Black" Margin="0,0,0,-6">
 
         <Grid.RowDefinitions>

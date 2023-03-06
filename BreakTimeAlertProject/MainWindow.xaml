@@ -8,11 +8,14 @@
         Title="Break Time Alert"
 		ShowInTaskbar="True"
         Topmost="True"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         Height="500"
-        Width="700">
+        Width="700"
+        KeyDown="Window_KeyDown">
     <Grid Background="Black">
         <Label Name="MainLabel" Content="Dinlen!" FontSize="90" Foreground="White"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Content="Çıkış: ESC          Ayarlar: F1" FontSize="15" Foreground="White"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Grid.ColumnSpan="4"/>
     </Grid>
 </Window>

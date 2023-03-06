@@ -183,5 +183,16 @@ namespace BreakTimeAlertProject
 
             Properties.Settings.Default.Save();
         }
+
+        /// <summary>
+        /// Pencerenin eğer kullanıcının ESC tuşuna basması durumunda kapanması için kısayol atandı.
+        /// </summary>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
+        }
     }
 }

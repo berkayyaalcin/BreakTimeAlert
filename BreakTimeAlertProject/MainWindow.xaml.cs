@@ -37,5 +37,23 @@ namespace BreakTimeAlertProject
             e.Cancel = true;
             Hide();
         }
+
+        /// <summary>
+        /// Kullanıcı için tanımlanmış tuşlar ile tüm pencereleri kapatma ve ayarları açmak için kısayol oluşturuldu.
+        /// </summary>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                foreach (Window window in Application.Current.Windows)
+                {
+                    window.Close();
+                }
+            }
+            if (e.Key == Key.F1) 
+            {
+                settings.Show();
+            }
+        }
     }
 }
