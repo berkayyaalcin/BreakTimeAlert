@@ -13,5 +13,11 @@ namespace BreakTimeAlertProject
     /// </summary>
     public partial class App : Application
     {
+        TrayIcon tray = new TrayIcon();
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            tray.AppIcon();
+        }
     }
 }
