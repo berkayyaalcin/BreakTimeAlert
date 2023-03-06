@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Diagnostics;
 
 namespace BreakTimeAlertProject
 {
@@ -21,7 +22,7 @@ namespace BreakTimeAlertProject
         AppSettings settings = new AppSettings();
         protected override void OnStartup(StartupEventArgs e)
         {
-
+            CheckProcess();
             base.OnStartup(e);
             tray.AppIcon();
             var timer = new System.Timers.Timer(TimeSpan.FromMinutes(settings.Minute).TotalMilliseconds);
@@ -79,6 +80,26 @@ namespace BreakTimeAlertProject
                 }
                 else
                     timer.Stop();
+            }
+        }
+
+        /// <summary>
+        /// Öncelikle mevcut uygulamanın süreci process değişkenine atanır. Sonra uygulamanın adına sahip süreçler alınır ve processes'a atanır.
+        /// Foreach ile processes içinde her bir süreç proc değişkenine atanır. 
+        /// If koşuluyla mevcut id ile proc.id aynı değil mi ve mevcut isim ile proc.isim aynı mı olarak kontrol edilir. Koşul doğrulanırsa proc ve döngü sonlandırılır.
+        /// </summary>
+        private void CheckProcess()
+        {
+            var process = Process.GetCurrentProcess();
+            var processes = Process.GetProcessesByName(process.ProcessName);
+
+            foreach (var proc in processes)
+            {
+                if (proc.Id != process.Id && proc.MainModule.FileName == process.MainModule.FileName)
+                {
+                    proc.Kill();
+                    break;
+                }
             }
         }
     }
