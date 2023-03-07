@@ -138,51 +138,62 @@ namespace BreakTimeAlertProject
             else
                 InactiveRadioButton.IsChecked = true;
         }
+
         /// <summary>
-        /// Kaydedilmiş ayarları JSON dosyasına yazmayı sağlar. JObject sınıfından JsonData nesnesi yaratılır.
-        /// Serialize yapılarak JsonData nesnesi JSON'a dönüştürülerek json'a atılır.
-        /// JSON dizesi WriteAlltext kullanılarak path üzerinde belirtilen dosyaya yazılır.
+        /// Kaydedilmiş ayarları JSON dosyasından yüklemek için kullanılır. Eğer dosya mevcut değilse Default ayarlar ile oluşturur.
+        /// Oluşturulan bu dosya Serialize edilerek JSON dosyasına WriteAllText ile yazdıdırılır.
+        /// Settings dosyasından ReadAllText ile okuma yapılıp Deserialize edilir ve ilgili değerlere atanır ve kaydedilir.
+        /// </summary>
+        public void LoadJsonFiletoSettings()
+        {
+            string fileName = "settings.json";
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+
+            if (!File.Exists(path))
+            {
+                //settings.json dosyası mevcut değil ise verilen değerlerle oluştur.
+                var settings = new
+                {
+                    Label = "Dinlen!",
+                    Minute = 20,
+                    Second = 20,
+                    isActive = true
+                };
+                string json = JsonConvert.SerializeObject(settings);
+                File.WriteAllText(path, json);
+            }
+
+            string jsonContent = File.ReadAllText(path);
+            dynamic settingsData = JsonConvert.DeserializeObject(jsonContent);
+
+            Properties.Settings.Default.Label = settingsData.Label;
+            Properties.Settings.Default.Minute = settingsData.Minute;
+            Properties.Settings.Default.Second = settingsData.Second;
+            Properties.Settings.Default.isActive = settingsData.isActive;
+
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// Kaydedilen değerleri ilgili etiketlere atayarak Seriliaze edilir.
+        /// Sonrasında ise JSON dosyasına WriteAllText ile yazma işlemi gerçekleştirir.
         /// </summary>
         private void WriteSettingsToJsonFile()
         {
-            JObject jsonData = new JObject();
-            jsonData.Add("Label", Properties.Settings.Default.Label);
-            jsonData.Add("Minute", Properties.Settings.Default.Minute);
-            jsonData.Add("Second", Properties.Settings.Default.Second);
-            jsonData.Add("isActive", Properties.Settings.Default.isActive);
-
-            string json = JsonConvert.SerializeObject(jsonData);
+            var settings = new
+            {
+                Label = Properties.Settings.Default.Label,
+                Minute = Properties.Settings.Default.Minute,
+                Second = Properties.Settings.Default.Second,
+                isActive = Properties.Settings.Default.isActive
+            };
+            string json = JsonConvert.SerializeObject(settings);
 
             string fileName = "settings.json";
             string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             File.WriteAllText(path, json);
         }
 
-        /// <summary>
-        /// Kaydedilmiş ayarları JSON dosyasından yüklemek için kullanılır. ReadAllText ile JSON okunur ve json değişkenine verilir.
-        /// Parse yönetim kullanılarak JsonData okunan JSON nesnesine dönüşür ve buradaki ayarları kednisine özellik olarak alır.
-        /// Kaydedilmiş olan ayarlar JSON dosyasında bulunan değerler ile güncellenir ve kayıt edilir.
-        /// </summary>
-        public void LoadJsonFiletoSettings()
-        {
-            string fileName = "settings.json";
-            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-            string json = File.ReadAllText(path);
-
-            JObject jsonData = JObject.Parse(json);
-
-            string label = (string)jsonData["Label"];
-            byte minute = (byte)jsonData["Minute"];
-            byte second = (byte)jsonData["Second"];
-            bool isActive = (bool)jsonData["isActive"];
-
-            Properties.Settings.Default.Label = label;
-            Properties.Settings.Default.Minute = minute;
-            Properties.Settings.Default.Second = second;
-            Properties.Settings.Default.isActive = isActive;
-
-            Properties.Settings.Default.Save();
-        }
 
         /// <summary>
         /// Pencerenin eğer kullanıcının ESC tuşuna basması durumunda kapanması için kısayol atandı.
