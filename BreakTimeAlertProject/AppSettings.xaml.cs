@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Reflection;
 
 namespace BreakTimeAlertProject
 {
@@ -24,15 +25,18 @@ namespace BreakTimeAlertProject
     /// </summary>
     public partial class AppSettings : Window
     {
-        private bool _isActive;
+        private bool _isActive, _isOn;
         private byte _minute, _second;
         private string? _label;
         public AppSettings()
         {
             InitializeComponent();
-            LoadSettings();
+            LoadActiveSettings();
+            LoadOnSettings();
             ActiveRadioButton.Checked += ActiveRadioButton_Checked;
             InactiveRadioButton.Checked += InactiveRadioButton_Checked;
+            OnRadioButton.Checked += OnRadioButton_Checked;
+            OffRadioButton.Checked += OffRadioButton_Checked;
             SaveButton.Click += SaveButton_Click;
 
             Minute = Properties.Settings.Default.Minute; //İlk değerinin daha önce kaydedilen değerle eşlemesi sağlanır.
@@ -62,12 +66,24 @@ namespace BreakTimeAlertProject
             Properties.Settings.Default.Save();
         }
 
+        private void OnRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            _isOn = true;
+            Properties.Settings.Default.Save();
+        }
+        private void OffRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            _isOn = false;
+            Properties.Settings.Default.Save();
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.Minute = (byte)MinuteBox.Value;
             Properties.Settings.Default.Second = (byte)SecondBox.Value;
             Properties.Settings.Default.Label = (string)TextBox.Text;
             Properties.Settings.Default.isActive = _isActive;
+            Properties.Settings.Default.isOn = _isOn;
 
             Properties.Settings.Default.Save();
             WriteSettingsToJsonFile();
@@ -121,7 +137,7 @@ namespace BreakTimeAlertProject
         /// _isActive için ayarlardaki varolan değeri atamaya çalışır. Eğer yok veya yüklenemezse otomatik olarak true değeri atar.
         /// _isActive durumuna göre ilgili radiobutton seçilmesi sağlanır.
         /// </summary>
-        private void LoadSettings()
+        private void LoadActiveSettings()
         {
             try
             {
@@ -137,6 +153,23 @@ namespace BreakTimeAlertProject
             }
             else
                 InactiveRadioButton.IsChecked = true;
+        }
+        private void LoadOnSettings()
+        {
+            try
+            {
+                _isOn = Properties.Settings.Default.isOn;
+            }
+            catch (ConfigurationErrorsException)
+            {
+                _isOn = true;
+            }
+            if (_isOn)
+            {
+                OnRadioButton.IsChecked = true;
+            }
+            else
+                OffRadioButton.IsChecked = true;
         }
 
         /// <summary>
@@ -157,7 +190,8 @@ namespace BreakTimeAlertProject
                     Label = "Dinlen!",
                     Minute = 20,
                     Second = 20,
-                    isActive = true
+                    isActive = true,
+                    isOn = true,
                 };
                 string json = JsonConvert.SerializeObject(settings);
                 File.WriteAllText(path, json);
@@ -170,6 +204,7 @@ namespace BreakTimeAlertProject
             Properties.Settings.Default.Minute = settingsData.Minute;
             Properties.Settings.Default.Second = settingsData.Second;
             Properties.Settings.Default.isActive = settingsData.isActive;
+            Properties.Settings.Default.isOn = settingsData.isOn;
 
             Properties.Settings.Default.Save();
         }
@@ -185,7 +220,8 @@ namespace BreakTimeAlertProject
                 Label = Properties.Settings.Default.Label,
                 Minute = Properties.Settings.Default.Minute,
                 Second = Properties.Settings.Default.Second,
-                isActive = Properties.Settings.Default.isActive
+                isActive = Properties.Settings.Default.isActive,
+                isOn = Properties.Settings.Default.isOn
             };
             string json = JsonConvert.SerializeObject(settings);
 
@@ -193,8 +229,6 @@ namespace BreakTimeAlertProject
             string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
             File.WriteAllText(path, json);
         }
-
-
         /// <summary>
         /// Pencerenin eğer kullanıcının ESC tuşuna basması durumunda kapanması için kısayol atandı.
         /// </summary>

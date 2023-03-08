@@ -9,6 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Diagnostics;
+using System.Reflection;
+using System.IO;
+using IWshRuntimeLibrary;
 
 namespace BreakTimeAlertProject
 {
@@ -23,6 +26,7 @@ namespace BreakTimeAlertProject
         protected override void OnStartup(StartupEventArgs e)
         {
             CheckProcess();
+            CreateOrDeleteShortcut();
             base.OnStartup(e);
             tray.AppIcon();
             var timer = new System.Timers.Timer(TimeSpan.FromMinutes(settings.Minute).TotalMilliseconds);
@@ -102,5 +106,34 @@ namespace BreakTimeAlertProject
                 }
             }
         }
+
+        /// <summary>
+        /// Oluşturulmuş bu metot OnRadioButton ve OffRadioButton'ları dinler.
+        /// Eğer On seçiliyse Startup üzerinde uygulamanın kısayolunu oluşturur. Off seçili ise kısayolu siler.
+        /// </summary>
+        private void CreateOrDeleteShortcut()
+        {
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\BreakTimeAlertProject.exe.lnk";
+
+            if (settings.OnRadioButton.IsChecked == true)
+            {
+                WshShell shell = new WshShell();
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+                shortcut.Description = "BreakTimeAlertProject shortcut";
+                shortcut.TargetPath = Assembly.GetEntryAssembly().Location.Replace(".dll", ".exe");
+
+                shortcut.Save();
+            }
+            else if (settings.OffRadioButton.IsChecked == true)
+            {
+
+                if (System.IO.File.Exists(shortcutPath))
+                {
+                    System.IO.File.Delete(shortcutPath);
+                }
+            }
+        }
+
+
     }
 }

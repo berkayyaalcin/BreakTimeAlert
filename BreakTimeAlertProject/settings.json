@@ -2,5 +2,6 @@
   "Label": "Dinlen!",
   "Minute": 20,
   "Second": 20,
-  "isActive": true
+  "isActive": true,
+  "isOn": true
 }
