@@ -191,7 +191,7 @@ namespace BreakTimeAlertProject
                     Minute = 20,
                     Second = 20,
                     isActive = true,
-                    isOn = true,
+                    isOn = false,
                 };
                 string json = JsonConvert.SerializeObject(settings);
                 File.WriteAllText(path, json);

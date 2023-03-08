@@ -113,14 +113,15 @@ namespace BreakTimeAlertProject
         /// </summary>
         private void CreateOrDeleteShortcut()
         {
-            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\BreakTimeAlertProject.exe.lnk";
+            string shortcutPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup) + @"\BreakTimeAlertProject.lnk";
+            string executablePath = AppDomain.CurrentDomain.BaseDirectory + "BreakTimeAlertProject.exe";
 
             if (settings.OnRadioButton.IsChecked == true)
             {
                 WshShell shell = new WshShell();
                 IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
                 shortcut.Description = "BreakTimeAlertProject shortcut";
-                shortcut.TargetPath = Assembly.GetEntryAssembly().Location.Replace(".dll", ".exe");
+                shortcut.TargetPath = executablePath;
 
                 shortcut.Save();
             }

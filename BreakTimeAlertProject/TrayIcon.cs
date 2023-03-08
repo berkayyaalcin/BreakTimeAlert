@@ -34,8 +34,9 @@ namespace BreakTimeAlertProject
                 if (args.Button == MouseButtons.Left)
                 {
                     mainWindow.Show();
-                    mainWindow.WindowState = WindowState.Normal;
                     mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                    mainWindow.Activate();
+                    mainWindow.Show(); 
                 }
                 //Kullanıcı ikona sağ tık yaptığı zaman gösterilecek olan menünün tıklanmış olduğu yerinde açılması için "Cursor.Position" kullanıldı.
                 if (args.Button == MouseButtons.Right)

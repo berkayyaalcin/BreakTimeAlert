@@ -11,7 +11,7 @@
         WindowStyle="None"
         Height="500"
         Width="700"
-        KeyDown="Window_KeyDown">
+        KeyDown="Window_KeyDown" WindowStartupLocation="CenterScreen">
     <Grid Background="Black">
         <Label Name="MainLabel" Content="Dinlen!" FontSize="90" Foreground="White"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
