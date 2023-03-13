@@ -15,7 +15,8 @@ Hazırladığım bu uygulamanın amacı odaklanmaya bağlı oluşan göz kurulu�
 - Klasör içinde bulunan dosyalar => [Dosyalar](https://user-images.githubusercontent.com/110452236/223790661-26c4d263-63ba-4016-89d7-0310ff8031cf.png)
 - Uygulama çalışma bildirimi => [Bildirim Balonu](https://user-images.githubusercontent.com/110452236/223790779-e8a184d9-11e1-49b4-a1e1-1287ba0667a5.png)
 - System Tray ikon menüsü => [İkon](https://user-images.githubusercontent.com/110452236/223790958-8f0b2627-9f99-4af1-88fd-617d0f4b9b30.png)
-- Ayarlar Penceresi => [Ayarlar penceresi](https://user-images.githubusercontent.com/110452236/223791052-f610250f-691b-4d73-b4c4-e9c203f75936.png)
+- Ayarlar Penceresi => [Ayarlar penceresi](https://user-images.githubusercontent.com/110452236/224613552-256cfac7-02f1-472c-ad69-67a242304cab.png)
+
 - Uyarı Penceresi => [Uyarı ekranı](https://user-images.githubusercontent.com/110452236/223791334-9d30350a-3696-4503-96cb-8a57958e02c9.png)
 
 ---
